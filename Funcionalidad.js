@@ -747,6 +747,6 @@ class LunarLander {
 window.addEventListener('load', () => {
   const game = new LunarLander({
     canvas: document.getElementById('gameCanvas'),
-    initialGravity: 0.05
+    initialGravity: 0.01
   });
 });
