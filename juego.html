@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="./img/Luna_llena-removebg-preview.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tektur:wght@400..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Lunar Landing</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
+
+      canvas {
+        display: block;
+        touch-action: none;
+      }
+
+      #gameContainer {
+        position: relative;
+      }
+
+      #gameCanvas {
+        border: 1px solid #333;
+        display: block;
+      }
+
+      #instructions {
+        position: absolute;
+        bottom: -80px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        color: #aaa;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="gameContainer">
+      <canvas id="gameCanvas" width="800" height="600"></canvas>
+      <div id="instructions">
+        <p>
+          Use las flechas para controlar el módulo lunar:<br />
+          ↑ = Propulsor principal, ← = Girar izquierda, → = Girar derecha<br />
+          Presiona R para reiniciar después de aterrizar o estrellarte
+        </p>
+      </div>
+    </div>
+    <script src="Funcionalidad.js" type="module"></script>
+  </body>
+</html>

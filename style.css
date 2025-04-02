@@ -1,0 +1,67 @@
+
+@font-face {
+    font-family: 'FunSpace';
+    src: url('../fuentes/FunSpace.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+}
+.tektur {
+    font-family: "Tektur", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:  "wdth" 100;
+  }
+body{
+    background-image: url('./img/Espacio.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: repeat;
+}
+h2 {
+    font-family: 'Tektur', sans-serif;
+    font-size: 1.7rem;
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+    transition: transform 0.3s ease;
+}
+h2:hover {
+    transform: scale(1.1);
+    font-size: 2rem;
+}
+.container {
+    width: 90%; 
+    max-width: 850px; 
+    margin: 10px auto; 
+    position: relative;
+    text-align: center;
+}
+.container img {
+    display: block;
+    width: 100%; 
+    border-radius: 20px;
+    height: auto;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+.titulo_juego{
+    top: 65%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    padding: 10px 20px;
+    text-decoration: none;
+}
+footer{
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    color: white;
+    text-align: center;
+    padding: 10px 10px 0 10px;
+}
+footer img{
+    display: inline-block;
+    width: auto;
+    height: 70px;
+}
