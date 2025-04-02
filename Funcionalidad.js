@@ -386,61 +386,92 @@ class LunarLander {
     }
     
     // Comprobar colisión con el terreno
-    checkTerrainCollision() {
-      const landerBottom = this.lander.y + this.lander.height;
-      const landerCenterX = this.lander.x + this.lander.width / 2;
+    // Modificación de la función checkTerrainCollision
+checkTerrainCollision() {
+  const landerBottom = this.lander.y + this.lander.height;
+  const landerCenterX = this.lander.x + this.lander.width / 2;
+  const landerLeft = this.lander.x;
+  const landerRight = this.lander.x + this.lander.width;
+  
+  // Primero verificar si está sobre una plataforma de aterrizaje
+  let onLandingPad = false;
+  let landingPadY = 0;
+  
+  for (const pad of this.landingPads) {
+    // Verificar si el centro del módulo está sobre la plataforma
+    if (landerCenterX >= pad.x && landerCenterX <= pad.x + pad.width) {
+      onLandingPad = true;
+      landingPadY = pad.y;
       
-      // Encontrar los segmentos de terreno que están debajo del módulo
-      for (let i = 0; i < this.terrain.length - 1; i++) {
-        const t1 = this.terrain[i];
-        const t2 = this.terrain[i + 1];
+      // Si el módulo ha tocado la plataforma
+      if (landerBottom >= landingPadY) {
+        // Comprobar condiciones de aterrizaje seguro
+        const isLevelEnough = Math.abs(this.lander.rotation) < 0.25; // Aprox. 15 grados
+        const isSlow = Math.abs(this.lander.velocityY) < 1.5 * this.scaleFactor && 
+                       Math.abs(this.lander.velocityX) < 1 * this.scaleFactor;
         
-        if (landerCenterX >= t1.x && landerCenterX <= t2.x) {
-          // Interpolar la altura del terreno en la posición x del módulo
-          const terrainRatio = (landerCenterX - t1.x) / (t2.x - t1.x);
+        if (isLevelEnough && isSlow) {
+          // Aterrizaje exitoso
+          this.lander.y = landingPadY - this.lander.height;
+          this.lander.velocityX = 0;
+          this.lander.velocityY = 0;
+          this.gameState = 'landed';
+          
+          // Aumentar puntuación basada en combustible restante y nivel
+          const fuelBonus = Math.floor(this.lander.fuel / 10);
+          this.score += 1000 + fuelBonus + (this.level * 500);
+          
+          // Preparar para el siguiente nivel con mayor gravedad
+          this.level++;
+          this.gravity = this.initialGravity + (this.level * 0.01);
+          
+          console.log(`¡Aterrizaje exitoso! Puntuación: ${this.score}, Nivel: ${this.level}`);
+        } else {
+          // Colisión - módulo estrellado en plataforma pero con mal ángulo o velocidad
+          this.gameState = 'crashed';
+          console.log('Módulo estrellado en plataforma: velocidad o ángulo incorrecto');
+        }
+        
+        return; // Terminar la verificación aquí
+      }
+    }
+  }
+  
+  // Si no está sobre una plataforma o no ha tocado la plataforma aún,
+  // verificar colisión con el terreno irregular
+  for (let i = 0; i < this.terrain.length - 1; i++) {
+    const t1 = this.terrain[i];
+    const t2 = this.terrain[i + 1];
+    
+    // Verificar si alguna parte del módulo está sobre este segmento de terreno
+    if (landerRight >= t1.x && landerLeft <= t2.x) {
+      // Calcular el punto exacto de intersección con el terreno
+      // Para cada punto de la base del módulo
+      const checkPoints = [
+        landerLeft + this.lander.width * 0.2,  // 20% desde la izquierda
+        landerCenterX,                         // Centro
+        landerLeft + this.lander.width * 0.8   // 80% desde la izquierda
+      ];
+      
+      for (const pointX of checkPoints) {
+        // Si el punto está dentro de este segmento de terreno
+        if (pointX >= t1.x && pointX <= t2.x) {
+          // Interpolar la altura del terreno en esta posición x
+          const terrainRatio = (pointX - t1.x) / (t2.x - t1.x);
           const terrainHeight = t1.y + terrainRatio * (t2.y - t1.y);
           
-          // Verificar si el módulo ha tocado el terreno
+          // Verificar si el módulo ha tocado el terreno en este punto
           if (landerBottom >= terrainHeight) {
-            // Comprobar si ha aterrizado en una plataforma de aterrizaje
-            const onLandingPad = this.landingPads.some(pad => 
-              landerCenterX >= pad.x && 
-              landerCenterX <= pad.x + pad.width &&
-              Math.abs(terrainHeight - pad.y) < 5
-            );
-            
-            // Comprobar condiciones de aterrizaje seguro
-            const isLevelEnough = Math.abs(this.lander.rotation) < 0.25; // Aprox. 15 grados
-            const isSlow = Math.abs(this.lander.velocityY) < 1.5 * this.scaleFactor && 
-                           Math.abs(this.lander.velocityX) < 1 * this.scaleFactor;
-            
-            if (onLandingPad && isLevelEnough && isSlow) {
-              // Aterrizaje exitoso
-              this.lander.y = terrainHeight - this.lander.height;
-              this.lander.velocityX = 0;
-              this.lander.velocityY = 0;
-              this.gameState = 'landed';
-              
-              // Aumentar puntuación basada en combustible restante y nivel
-              const fuelBonus = Math.floor(this.lander.fuel / 10);
-              this.score += 1000 + fuelBonus + (this.level * 500);
-              
-              // Preparar para el siguiente nivel con mayor gravedad
-              this.level++;
-              this.gravity = this.initialGravity + (this.level * 0.01);
-              
-              console.log(`¡Aterrizaje exitoso! Puntuación: ${this.score}, Nivel: ${this.level}`);
-            } else {
-              // Colisión - módulo estrellado
-              this.gameState = 'crashed';
-              console.log('Módulo estrellado');
-            }
-            
-            break;
+            // Colisión con terreno irregular = módulo estrellado
+            this.gameState = 'crashed';
+            console.log('Módulo estrellado en terreno irregular');
+            return;
           }
         }
       }
     }
+  }
+}
     
     // Dibujar el juego
     draw() {
