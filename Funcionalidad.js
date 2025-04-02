@@ -13,7 +13,7 @@ class LunarLander {
       this.height = this.canvas.height;
       
       // Gravedad (valores bajos para simular la Luna, se incrementará con cada nivel)
-      this.gravity = options.initialGravity || 0.05;
+      this.gravity = options.initialGravity || 0.01;
       this.initialGravity = this.gravity;
       
       // Factor de escala para adaptarse a diferentes tamaños de pantalla
@@ -27,7 +27,7 @@ class LunarLander {
         height: 40,
         velocityX: 0,
         velocityY: 0,
-        thrust: 0.1,
+        thrust: 0.09,
         fuel: 1000,
         fuelConsumption: 1,
         rotation: 0, // En radianes
@@ -347,12 +347,12 @@ class LunarLander {
         }
         
         if (this.lander.thrustingLeft) {
-          this.lander.rotation -= 0.05;
+          this.lander.rotation -= 0.03;
           this.lander.fuel -= this.lander.fuelConsumption * 0.5;
         }
         
         if (this.lander.thrustingRight) {
-          this.lander.rotation += 0.05;
+          this.lander.rotation += 0.03;
           this.lander.fuel -= this.lander.fuelConsumption * 0.5;
         }
       }
@@ -364,7 +364,7 @@ class LunarLander {
       }
       
       // Limitar la velocidad máxima para evitar comportamientos extraños
-      const maxVelocity = 5 * this.scaleFactor;
+      const maxVelocity = 3 * this.scaleFactor;
       this.lander.velocityX = Math.max(Math.min(this.lander.velocityX, maxVelocity), -maxVelocity);
       this.lander.velocityY = Math.max(Math.min(this.lander.velocityY, maxVelocity), -maxVelocity);
       
