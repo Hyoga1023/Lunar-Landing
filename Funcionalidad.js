@@ -15,6 +15,33 @@ class LunarLander {
     // Gravedad (valores bajos para simular la Luna, se incrementará con cada nivel)
     this.gravity = options.initialGravity || 0.007;
     this.initialGravity = this.gravity;
+
+    this.planetColors = [
+      '#777', // Gris (Luna)
+      '#C1440E', // Rojo (Marte)
+      '#E6BE8A', // Beige (Venus)
+      '#8B4513', // Marrón (Titán)
+      '#ADD8E6', // Azul claro (Europa)
+      '#9ACD32', // Verde amarillento (Planeta alienígena)
+      '#FFD700', // Dorado (Io)
+      '#800080', // Púrpura (Planeta fantasía)
+      '#FF6347'  // Rojo coral (Planeta lava)
+    ];
+    
+    // Color actual del terreno basado en el nivel
+    this.currentTerrainColor = this.planetColors[0];
+
+    this.planetNames = [
+      'Luna', 
+      'Marte', 
+      'Venus', 
+      'Titán', 
+      'Europa', 
+      'Kepler-22b', 
+      'Io', 
+      'Nexus-6', 
+      'Mustafar'
+    ];
     
     // Factor de escala para adaptarse a diferentes tamaños de pantalla
     this.scaleFactor = 1;
@@ -541,7 +568,7 @@ for (let i = 0; i < this.terrain.length - 1; i++) {
     this.ctx.closePath();
     
     // Color del terreno (gris para la luna)
-    this.ctx.fillStyle = '#777';
+    this.ctx.fillStyle = this.currentTerrainColor;
     this.ctx.fill();
     
     // Dibujar plataformas de aterrizaje
@@ -742,6 +769,7 @@ drawUI() {
   this.ctx.textAlign = 'right';
   this.ctx.fillText(`Puntuación: ${this.score}`, this.width - 20, 30);
   this.ctx.fillText(`Nivel: ${this.level}`, this.width - 20, 60);
+  this.ctx.fillText(`Planeta: ${this.planetNames[(this.level - 1) % this.planetNames.length]}`, this.width - 20, 90);
   
   // Mostrar velocidad y altitud
   this.ctx.textAlign = 'left';
@@ -792,6 +820,9 @@ reset() {
   // Regenerar terreno para el nuevo nivel
   this.generateTerrain();
   
+  // Actualizar el color del terreno según el nivel (ciclo a través de los colores)
+this.currentTerrainColor = this.planetColors[(this.level - 1) % this.planetColors.length];
+
   // Volver al estado de juego
   this.gameState = 'playing';
 }
