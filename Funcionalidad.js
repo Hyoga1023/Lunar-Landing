@@ -13,7 +13,7 @@ class LunarLander {
     this.height = this.canvas.height;
     
     // Gravedad (valores bajos para simular la Luna, se incrementará con cada nivel)
-    this.gravity = options.initialGravity || 0.008;
+    this.gravity = options.initialGravity || 0.007;
     this.initialGravity = this.gravity;
     
     // Factor de escala para adaptarse a diferentes tamaños de pantalla
@@ -460,7 +460,7 @@ for (const pad of this.landingPads) {
         
         // Preparar para el siguiente nivel con mayor gravedad
         this.level++;
-        this.gravity = this.initialGravity + (this.level * 0.008);
+        this.gravity = this.initialGravity + (this.level * 0.007);
         
         console.log(`¡Aterrizaje exitoso! Puntuación: ${this.score}, Nivel: ${this.level}`);
       } else {
@@ -786,7 +786,7 @@ reset() {
     // Si aterrizó con éxito, ya se incrementó el nivel
   } else {
     // Si se estrelló, mantener el nivel actual pero resetear la gravedad
-    this.gravity = this.initialGravity + (this.level * 0.008);
+    this.gravity = this.initialGravity + (this.level * 0.007);
   }
   
   // Regenerar terreno para el nuevo nivel
@@ -815,7 +815,7 @@ animate(timestamp) {
 window.addEventListener('load', () => {
 const game = new LunarLander({
   canvas: document.getElementById('gameCanvas'),
-  initialGravity: 0.008
+  initialGravity: 0.007
 });
 });
 
