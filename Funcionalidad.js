@@ -401,7 +401,7 @@ class LunarLander {
   this.lander.velocityX *= 0.99;
   
   // Limitar la velocidad máxima para evitar comportamientos extraños
-  const maxVelocity = 3.1 * this.scaleFactor; // Aumentado ligeramente de 3 a 3.5
+  const maxVelocity = 3 * this.scaleFactor; 
   this.lander.velocityX = Math.max(Math.min(this.lander.velocityX, maxVelocity), -maxVelocity);
   this.lander.velocityY = Math.max(Math.min(this.lander.velocityY, maxVelocity), -maxVelocity);
     
