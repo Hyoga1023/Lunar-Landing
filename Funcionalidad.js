@@ -1,3 +1,4 @@
+let gameInstance;
 // Mecánica de juego para Módulo Lunar (Versión para móviles)
 class LunarLander {
   constructor(options = {}) {
@@ -841,12 +842,46 @@ animate(timestamp) {
   requestAnimationFrame(this.animate);
 }
 }
-
-// Inicializar el juego cuando se cargue la página
+// Inicialización del juego Lunar Lander con efectos planetarios
 window.addEventListener('load', () => {
-const game = new LunarLander({
-  canvas: document.getElementById('gameCanvas'),
-  initialGravity: 0.007
-});
-});
+  const game = new LunarLander({
+    canvas: document.getElementById('gameCanvas'),
+    initialGravity: 0.007
+  });
 
+  // Inicialización retardada de efectos
+  setTimeout(() => {
+    if (typeof PlanetaryEffects !== 'undefined') {
+      try {
+        const planetaryEffects = new PlanetaryEffects(game);
+        
+        // Guardar métodos originales
+        const originalDraw = game.draw.bind(game);
+        const originalUpdate = game.update.bind(game);
+        const originalReset = game.reset.bind(game);
+        
+        // Extender métodos
+        game.draw = function() {
+          originalDraw();
+          planetaryEffects.draw();
+        };
+        
+        game.update = function(deltaTime) {
+          originalUpdate(deltaTime);
+          planetaryEffects.update(deltaTime);
+        };
+        
+        game.reset = function() {
+          originalReset();
+          planetaryEffects.setLevel(game.level);
+        };
+        
+        // Iniciar con nivel 1
+        planetaryEffects.setLevel(1);
+        
+      } catch (error) {
+        console.error('Error en efectos:', error);
+      }
+    }
+  }, 100); // Pequeño retardo para asegurar inicialización
+});
