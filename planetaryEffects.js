@@ -528,7 +528,7 @@ class PlanetaryEffects {
     if (this.isFlashing && currentTime - this.flashStartTime > this.flashDuration) {
       this.isFlashing = false;
       // Establecer un nuevo tiempo de espera aleatorio
-      this.lightningCooldown = Math.random() * 5000 + 3000; // 3-8 segundos
+      this.lightningCooldown = Math.random() * 3000 + 1000; // 1-3 segundos
       this.lastLightningTime = currentTime;
     }
   },
@@ -580,7 +580,7 @@ class PlanetaryEffects {
       const flashIntensity = 1 - progress;
       
       ctx.globalCompositeOperation = 'lighter';
-      ctx.fillStyle = `rgba(255, 255, 255, ${flashIntensity * 0.7})`;
+      ctx.fillStyle = `rgba(255, 255, 255, ${flashIntensity * 1})`;
       ctx.fillRect(0, 0, this.game.width, this.game.height);
       ctx.globalCompositeOperation = 'source-over';
     }
