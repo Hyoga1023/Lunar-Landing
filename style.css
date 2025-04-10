@@ -19,6 +19,10 @@ body{
     background-attachment: fixed;
     background-repeat: repeat;
 }
+header{
+    display: flex;
+    justify-content: center;
+}
 h2 {
     font-family: 'Tektur', sans-serif;
     font-size: 1.7rem;
