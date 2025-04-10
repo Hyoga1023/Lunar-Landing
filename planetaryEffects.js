@@ -496,8 +496,8 @@ class PlanetaryEffects {
 // Io (nivel 7) - Tormenta eléctrica con rayos centrados
 6: {
   lastLightningTime: 0,
-  lightningCooldown: 2500, // 2.5 segundos iniciales
-  flashDuration: 1500, // 1.5 segundos de ceguera
+  lightningCooldown: 2000, // 2.0 segundos iniciales
+  flashDuration: 1700, // 1.7 segundos de ceguera
   isFlashing: false,
   flashStartTime: 0,
   lightningPosition: { x: 0, y: 0 },
@@ -507,7 +507,7 @@ class PlanetaryEffects {
   init: function() {
     this.lastLightningTime = this.game.getCurrentTime();
     this.isFlashing = false;
-    this.lightningCooldown = Math.random() * 3000 + 1000; // 1-4 segundos
+    this.lightningCooldown = Math.random() * 2500 + 1000; // 1 - 2.5 segundos
     this.lightningActive = false;
   },
   
