@@ -31,6 +31,14 @@ h2:hover {
     transform: scale(1.1);
     font-size: 2rem;
 }
+p{
+    font-family: 'Tektur', sans-serif;
+    font-size: 0.9rem;
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+    transition: transform 0.3s ease;
+}
 .container {
     width: 90%; 
     max-width: 850px; 
