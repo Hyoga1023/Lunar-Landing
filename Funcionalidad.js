@@ -667,11 +667,15 @@ for (let i = 0; i < this.terrain.length - 1; i++) {
     
     // Mostrar mensaje según el estado del juego
     if (this.gameState === 'landed') {
-      this.showMessage('¡ATERRIZAJE EXITOSO!', 'Toca la pantalla para el siguiente nivel<br>Si estas en un computador presiona R para continuar');
-    } else if (this.gameState === 'crashed') {
-      this.showMessage('MÓDULO ESTRELLADO', 'Toca la pantalla para reintentar<br>Si estas en un computador presiona R para continuar');
-    }
-  }
+  this.showMessage('¡ATERRIZAJE EXITOSO!');
+  this.showMessage('Toca la pantalla para el siguiente nivel');
+  this.showMessage('Si estás en un computador presiona R para continuar');
+} else if (this.gameState === 'crashed') {
+  this.showMessage('MÓDULO ESTRELLADO');
+  this.showMessage('Toca la pantalla para reintentar');
+  this.showMessage('Si estás en un computador presiona R para continuar');
+}
+
   
   // Dibujar botones de control táctil
   drawTouchControls() {
