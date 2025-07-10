@@ -667,9 +667,9 @@ for (let i = 0; i < this.terrain.length - 1; i++) {
     
     // Mostrar mensaje según el estado del juego
     if (this.gameState === 'landed') {
-      this.showMessage('¡ATERRIZAJE EXITOSO!', 'Toca la pantalla para el siguiente nivel<br>Si estas en un computador presiona R para continuar');
+      this.showMessage('¡ATERRIZAJE EXITOSO!', 'Toca la pantalla o presiona R para el siguiente nivel');
     } else if (this.gameState === 'crashed') {
-      this.showMessage('MÓDULO ESTRELLADO', 'Toca la pantalla para reintentar<br>Si estas en un computador presiona R para continuar');
+      this.showMessage('MÓDULO ESTRELLADO', 'Toca la pantalla o presiona R para reintentar');
     }
   }
   
